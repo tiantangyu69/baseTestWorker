@@ -27,7 +27,6 @@ public class RedisLock {
 
     /**
      * 尝试获取锁,不管是否获取到锁立即返回获取状态
-     *
      * @param lockKey
      * @return
      */
@@ -110,7 +109,7 @@ public class RedisLock {
         // 检查锁是否过期，这里主要是防止setNx命令执行后redis崩溃未执行expire操作造成死锁
         if (null != currentLockExpireTimeStr && Long.parseLong(currentLockExpireTimeStr) < System.currentTimeMillis()) {
             String oldValue = jedis.getSet(lockKey, lockExpireTimeStr);// 获取设置缓存之前的时间戳
-            // 防止锁过期后，多个线程并发获取到锁，通过对比获取的时间戳和设置时的时间戳是否相同判断是否同一线程获取到锁
+            // 防止锁过期后，多个线程并发获取到锁，通过对比获取的时间戳和设置时的时间戳是否相同判断是否当前线程获取到锁
             if (null != oldValue && oldValue.equals(currentLockExpireTimeStr)) {
                 return true;
             }
@@ -145,8 +144,15 @@ public class RedisLock {
      */
     public <T> T doInLock(String lockKey, long waitTime, TimeUnit timeUnit, LockExecutor<T> executor) {
         try {
+            T result;
             lock(lockKey, waitTime, timeUnit);
-            T result = executor.execute();
+            try{
+                result = executor.execute();
+            }catch (Exception e){
+                LOGGER.error("RedisLock.doInLock() LockExecutor Exception:" + e.getMessage());
+                unlock(lockKey);
+                throw e;
+            }
             unlock(lockKey);
             return result;
         } catch (Exception e) {
