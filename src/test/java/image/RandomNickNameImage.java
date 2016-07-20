@@ -17,6 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by bjlizhitao on 2016/7/5.
+ * 根据昵称列表随机生成该昵称首个字的随机图片，图片背景颜色随机，大小为150px * 150 px，字体大小为 70
  */
 public class RandomNickNameImage {
     public enum RandomNickNameImageBgColor {// 生成随机昵称图片的背景颜色
