@@ -33,14 +33,18 @@ public class RandomNickNameImage {
         public int getRgb() {
             return this.rgb;
         }
+
+        public static List<Color> getColors() {
+            List<Color> imageColors = new ArrayList<Color>();
+            for (RandomNickNameImageBgColor bgColor : RandomNickNameImageBgColor.values()) {
+                imageColors.add(new Color(bgColor.getRgb()));
+            }
+            return imageColors;
+        }
     }
 
-    private static final List<Color> IMAGE_COLORS = new ArrayList<Color>();
 
     static {
-        for (RandomNickNameImageBgColor bgColor : RandomNickNameImageBgColor.values()) {
-            IMAGE_COLORS.add(new Color(bgColor.getRgb()));
-        }
     }
 
     // 使用 ThreadLocalRandom 提升多线程并发下的随机数产生性能
@@ -51,6 +55,8 @@ public class RandomNickNameImage {
     private static final int IMAGE_HEIGHT = 150;
 
     public static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
+
+    private static final List<Color> IMAGE_COLORS = RandomNickNameImageBgColor.getColors();
 
     /**
      * 生成图片并获取图片的链接
