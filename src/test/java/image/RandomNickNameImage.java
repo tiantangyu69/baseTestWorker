@@ -7,7 +7,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.InputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -47,16 +49,31 @@ public class RandomNickNameImage {
     private static final int IMAGE_WIDTH = 150;
     private static final int IMAGE_HEIGHT = 150;
 
+    public static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
+
     /**
      * 生成图片并获取图片的链接
      *
      * @param anonymousNames
      * @return
      */
-    public static File generateImage(List<String> anonymousNames) {
+    public static void generateImage(List<String> anonymousNames, Callback callback) {
         Color bgColor = getRandomColor();
         String anonymousNamePrefix = getRandomAnonymousNamePrefix(anonymousNames);
-        return doGenerateImage(anonymousNamePrefix, bgColor);
+
+        File imageFile = doGenerateImage(anonymousNamePrefix, bgColor);
+        callback.callback(imageFile);
+        deleteTempFile(imageFile);
+    }
+
+    private static void deleteTempFile(File imageFile) {
+        if (null != imageFile) {
+            try {
+                Files.deleteIfExists(Paths.get(imageFile.toURI()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static Color getRandomColor() {
@@ -95,10 +112,21 @@ public class RandomNickNameImage {
         imageGraphics.drawString(str, (IMAGE_WIDTH - charInfo.getWidth()) / 2, charInfo.getHeight() + 6);// 计算字符串在图中居中的位置并画出字符串
         imageGraphics.dispose();
 
-        File filePath = new File("");
-        ImageIO.createImageOutputStream(image);
+        File imageFile = new File(getImagePath(bgColor, str));
+        ImageIO.write(image, "png", imageFile);
 
-        return filePath;
+        return imageFile;
+    }
+
+    /**
+     * 获取图片临时存放路径
+     *
+     * @param color
+     * @param str
+     * @return
+     */
+    private static String getImagePath(Color color, String str) {
+        return TEMP_DIR + File.separator + color.getRGB() + str + ".png";
     }
 
     /**
@@ -135,5 +163,9 @@ public class RandomNickNameImage {
             return this.height;
         }
 
+    }
+
+    public interface Callback {
+        void callback(File file);
     }
 }
