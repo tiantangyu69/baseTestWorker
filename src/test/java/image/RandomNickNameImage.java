@@ -43,10 +43,6 @@ public class RandomNickNameImage {
         }
     }
 
-
-    static {
-    }
-
     // 使用 ThreadLocalRandom 提升多线程并发下的随机数产生性能
     private static final Random RANDOM = ThreadLocalRandom.current();
 

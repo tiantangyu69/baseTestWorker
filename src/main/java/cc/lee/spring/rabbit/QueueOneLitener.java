@@ -1,4 +1,4 @@
-package cc.lee.redis;
+package cc.lee.spring.rabbit;
 
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;

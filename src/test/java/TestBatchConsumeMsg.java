@@ -1,4 +1,4 @@
-import cc.lee.redis.QueueOneLitener;
+import cc.lee.spring.rabbit.QueueOneLitener;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
