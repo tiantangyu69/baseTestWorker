@@ -61,15 +61,19 @@ public class RandomNickNameImage {
     /**
      * 生成图片并获取图片的链接
      *
-     * @param anonymousNames
+     * @param anonymousIds
      * @return
      */
-    public static void generateImage(List<String> anonymousNames, Callback callback) {
+    public static void generateImage(List<String> anonymousIds, Callback callback) {
         Color bgColor = getRandomColor();
-        String anonymousNamePrefix = getRandomAnonymousNamePrefix(anonymousNames);
+        String randomAnonymousId = getRandomAnonymousId(anonymousIds);
+
+        String nickName = callback.callbackSetNickname(randomAnonymousId);
+
+        String anonymousNamePrefix = getAnonymousNamePrefix(nickName);
 
         File imageFile = doGenerateImage(anonymousNamePrefix, bgColor);
-        callback.callback(imageFile);
+        callback.callbackFile(imageFile);
         deleteTempFile(imageFile);
     }
 
@@ -88,9 +92,16 @@ public class RandomNickNameImage {
         return IMAGE_COLORS.get(randomColorIndex);
     }
 
-    private static String getRandomAnonymousNamePrefix(List<String> anonymousNames) {
-        int randomIndex = RANDOM.nextInt(anonymousNames.size());
-        return anonymousNames.get(randomIndex).substring(0, 1);// 获取昵称第一个字
+    private static String getRandomAnonymousId(List<String> anonymousIds) {
+        int randomIndex = RANDOM.nextInt(anonymousIds.size());
+        return anonymousIds.get(randomIndex);// 获取随机昵称id
+    }
+
+    private static String getAnonymousNamePrefix(String anonymousName) {
+        if (null != anonymousName && !"".equals(anonymousName)) {
+            return anonymousName.substring(0, 1);// 获取昵称首个字
+        }
+        return "";
     }
 
     private static File doGenerateImage(String anonymousNamePrefix, Color bgColor) {
@@ -173,6 +184,8 @@ public class RandomNickNameImage {
     }
 
     public interface Callback {
-        void callback(File file);
+        String callbackSetNickname(String nickNameId);
+
+        void callbackFile(File file);
     }
 }

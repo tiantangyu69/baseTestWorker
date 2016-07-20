@@ -16,25 +16,53 @@ public class TestCreateImage {
     public void testCreateImage() throws IOException {
         Stopwatch stopwatch = Stopwatch.createUnstarted();
 
-        List<String> anonymousNames = getAnonymousNames();
+        List<String> anonymousIds = getAnonymousIds();
+        final List<String> anonymousNames = getAnonymousNames();
+
 
         stopwatch.start();
 
-        for (int i = 0; i < 20; i++) {
-            RandomNickNameImage.generateImage(anonymousNames, new RandomNickNameImage.Callback() {
-                public void callback(File file) {
-                    System.out.println(file.getAbsoluteFile());
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        for (int i = 0; i < 20000; i++) {
+            RandomNickNameImage.generateImage(anonymousIds, new RandomNickNameImage.Callback() {
+                public String callbackSetNickname(String nickNameId) {
+                    String nickName = anonymousNames.get(Integer.valueOf(nickNameId));
+                    return nickName;
+                }
+
+                public void callbackFile(File file) {
+                    System.out.println(file.getName());
                 }
             });
         }
 
         stopwatch.stop();
         System.out.println(stopwatch.elapsed(TimeUnit.MILLISECONDS));
+    }
+
+    private List<String> getAnonymousIds() {
+        List<String> anonymousNames = new ArrayList<String>();
+        anonymousNames.add("0");
+        anonymousNames.add("1");
+        anonymousNames.add("2");
+        anonymousNames.add("3");
+        anonymousNames.add("4");
+        anonymousNames.add("5");
+        anonymousNames.add("6");
+        anonymousNames.add("7");
+        anonymousNames.add("8");
+        anonymousNames.add("9");
+        anonymousNames.add("10");
+        anonymousNames.add("11");
+        anonymousNames.add("12");
+        anonymousNames.add("13");
+        anonymousNames.add("14");
+        anonymousNames.add("15");
+        anonymousNames.add("16");
+        anonymousNames.add("17");
+        anonymousNames.add("18");
+        anonymousNames.add("19");
+
+        return anonymousNames;
     }
 
     private List<String> getAnonymousNames() {
