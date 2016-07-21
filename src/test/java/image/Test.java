@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Test {
@@ -43,6 +44,14 @@ public class Test {
             outImage.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @org.junit.Test
+    public void testFonts() {
+        String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames(Locale.CHINA);
+        for (String font : fonts) {
+            System.out.println(font);
         }
     }
 }
