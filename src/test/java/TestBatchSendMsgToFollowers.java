@@ -19,6 +19,13 @@ public class TestBatchSendMsgToFollowers {
     private AmqpTemplate AmqpTemplate;
 
     @Test
+    public void testSendMessage() {
+        for (int i = 0; i < 10; i++) {
+            AmqpTemplate.convertAndSend("queue_one_key", String.valueOf(i));
+        }
+    }
+
+    @Test
     public void testBatchInsertAndGetFormRedis() {
 
         Jedis jedis = new Jedis();
@@ -42,7 +49,7 @@ public class TestBatchSendMsgToFollowers {
 
 
         beginTime = System.currentTimeMillis();
-        for (String myfollower: myfollowers) {
+        for (String myfollower : myfollowers) {
             AmqpTemplate.convertAndSend("queue_one_key", myfollower);
         }
         endTime = System.currentTimeMillis();
