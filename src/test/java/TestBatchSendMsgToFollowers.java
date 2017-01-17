@@ -25,7 +25,7 @@ public class TestBatchSendMsgToFollowers {
         }
     }
 
-    @Test
+    /*@Test
     public void testBatchInsertAndGetFormRedis() {
 
         Jedis jedis = new Jedis();
@@ -54,10 +54,10 @@ public class TestBatchSendMsgToFollowers {
         }
         endTime = System.currentTimeMillis();
         System.out.println("发送消息到rabbitMQ完成，发送消息数：" + myfollowers.size() + "条，耗时：" + (endTime - beginTime) + "毫秒");
-        /*try {
+        *//*try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
-    }
+        }*//*
+    }*/
 }

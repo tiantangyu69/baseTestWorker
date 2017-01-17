@@ -20,7 +20,7 @@
     </rabbit:direct-exchange>
 
     <!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 taskExecutor这个需要自己实现一个连接池 按照官方说法 除非特别大的数据量 一般不需要连接池-->
-    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto" prefetch="100" concurrency="10">
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto" prefetch="10" concurrency="5">
         <rabbit:listener queues="queue_one" ref="queueOneLitener"/>
     </rabbit:listener-container>
 

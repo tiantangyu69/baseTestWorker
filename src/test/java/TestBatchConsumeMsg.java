@@ -18,6 +18,12 @@ public class TestBatchConsumeMsg {
             QueueOneLitener.CountDownLatch.await();
             long endTime = System.currentTimeMillis();
             System.out.printf("消耗消息耗时：" + (endTime - beginTime) + "毫秒");
+
+            try {
+                Thread.sleep(500000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
