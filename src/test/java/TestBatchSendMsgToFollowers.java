@@ -20,8 +20,15 @@ public class TestBatchSendMsgToFollowers {
 
     @Test
     public void testSendMessage() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             AmqpTemplate.convertAndSend("queue_one_key", String.valueOf(i));
+        }
+    }
+
+    @Test
+    public void testSendMessage2() {
+        for (int i = 0; i < 30; i++) {
+            AmqpTemplate.convertAndSend("queue_two_key", String.valueOf(i));
         }
     }
 

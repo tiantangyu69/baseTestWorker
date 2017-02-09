@@ -7,7 +7,7 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import java.util.concurrent.CountDownLatch;
 
 public class QueueOneLitener implements MessageListener {
-    public static final java.util.concurrent.CountDownLatch CountDownLatch = new CountDownLatch(1);
+    public static final java.util.concurrent.CountDownLatch CountDownLatch = new CountDownLatch(30);
 
     public void onMessage(Message message) {
         Jackson2JsonMessageConverter jmc = new Jackson2JsonMessageConverter();
@@ -16,7 +16,7 @@ public class QueueOneLitener implements MessageListener {
         CountDownLatch.countDown();
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(20000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

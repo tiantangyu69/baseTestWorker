@@ -85,7 +85,7 @@ public class TestLang {
     }
 
     @Test
-    public void testSubList(){
+    public void testSubList() {
         List<String> lists = Lists.newArrayList();
 
         lists.add("aaa");
@@ -104,7 +104,7 @@ public class TestLang {
         lists.add("ddd");
 
         System.out.println(lists.subList(0, 10));
-        System.out.println(lists.subList(0, lists.size()));
+        System.out.println(lists.subList(lists.size() - 2, lists.size()));
 
     }
 }
