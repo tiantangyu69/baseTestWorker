@@ -10,6 +10,13 @@
     <context:annotation-config/>
     <context:component-scan base-package="cc.lee.spring"/>
 
-    <task:executor id="testExecutor" pool-size="32"/>
-    <task:annotation-driven executor="testExecutor"/>
+    <task:executor id="myExecutor" pool-size="32"/>
+    <task:annotation-driven executor="myExecutor" scheduler="taskScheduler"/>
+    <task:scheduler id="taskScheduler" pool-size="2"/>
+
+    <task:scheduled-tasks>
+        <task:scheduled ref="taskService" method="heartBeat"  cron="0 0 * * * ?"/>
+    </task:scheduled-tasks>
+
+    <bean id="taskService" class="cc.lee.spring.task.TaskServiceImpl"/>
 </beans>

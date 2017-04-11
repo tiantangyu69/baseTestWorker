@@ -1,5 +1,6 @@
 package guava.base;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
@@ -26,6 +27,9 @@ public class ObjectsTest {
 
 //        Objects.toStringHelper() is Deprecated
         System.out.println(MoreObjects.toStringHelper(ObjectsTest.class).add("x", 1).add("y", "aaa"));
+        System.out.println(MoreObjects.toStringHelper(this).toString());
+
+        System.out.println(Joiner.on("_").skipNulls().join(new Object[]{"a", "b", "c", 11, 12F}));
     }
 }
 
