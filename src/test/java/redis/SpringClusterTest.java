@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by bjlizhitao on 2017/3/20.
  */
-@ContextConfiguration(locations = {"classpath:spring-redis.xml"})
+@ContextConfiguration(locations = {"classpath:spring-redis-cluster.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SpringClusterTest {
     @Resource
