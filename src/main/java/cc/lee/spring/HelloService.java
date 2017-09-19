@@ -5,4 +5,6 @@ package cc.lee.spring;
  */
 public interface HelloService {
     void say();
+
+    void setName(String name);
 }

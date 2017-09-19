@@ -1,12 +1,15 @@
+/*
 package guava.eventbus;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import org.junit.Test;
 
+*/
 /**
  * Created by bjlizhitao on 2017/4/11.
- */
+ *//*
+
 public class EventBusTest {
 
     @Test
@@ -39,3 +42,4 @@ public class EventBusTest {
         eventBus.post(new Object());
     }
 }
+*/

@@ -1,6 +1,5 @@
 package guava.collect;
 
-import com.google.common.base.MoreObjects;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Ordering;
@@ -89,10 +88,10 @@ class Student implements Comparable<Student> {
         this.score = score;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("name", name).add("age", age).add("score", score).toString();
-    }
+    }*/
 
     public int compareTo(Student o) {
         return ComparisonChain.start()

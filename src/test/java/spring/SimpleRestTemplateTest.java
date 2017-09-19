@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * Created by bjlizhitao on 2016/7/12.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring-rest.xml"})
+@ContextConfiguration(locations = {"classpath:spring-httpclient-rest.xml"})
 public class SimpleRestTemplateTest {
     @Resource
     private RestTemplate simpleRestTemplate;

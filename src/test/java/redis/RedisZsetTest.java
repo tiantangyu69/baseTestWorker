@@ -1,10 +1,13 @@
 package redis;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.Maps;
 import io.netty.util.internal.ThreadLocalRandom;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -41,5 +44,30 @@ public class RedisZsetTest {
     @Test
     public void testZincreBy() {
 
+    }
+
+    @Test
+    public void testUsedMemory() {
+        Jedis jedis = new Jedis(HOST, PORT, CONNECTION_TIMEOUT, SO_TIMEOUT);
+
+
+        for (int i = 0; i < 10000; i++) {
+            Map<String, String> datas = Maps.newHashMap();
+            datas.put("audioLock", "1");
+            datas.put("cmtAgainst", "2967");
+            datas.put("cmtVote", "203544");
+            datas.put("createTime", "0");
+            datas.put("docId", "CMNCCHHG0001875P");
+            datas.put("needCheck", "0");
+            datas.put("plock", "0");
+            datas.put("rcount", "6244");
+            datas.put("tcount", "6099");
+            datas.put("threadAgainst", "0");
+            datas.put("threadVote", "482");
+
+            jedis.set("key" + i, JSON.toJSONString(datas)); // 2.87 mb
+//            jedis.hmset("map" + i, datas); // 2.56 mb
+        }
+        jedis.close();
     }
 }

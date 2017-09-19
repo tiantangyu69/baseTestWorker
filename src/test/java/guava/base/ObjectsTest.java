@@ -1,3 +1,4 @@
+/*
 package guava.base;
 
 import com.google.common.base.Joiner;
@@ -5,9 +6,11 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import org.junit.Test;
 
+*/
 /**
  * Created by bjlizhitao on 2016/6/28.
- */
+ *//*
+
 public class ObjectsTest {
     @Test
     public void testEqual() {
@@ -34,3 +37,4 @@ public class ObjectsTest {
         System.out.println(MoreObjects.toStringHelper(this).toString());
     }
 }
+*/

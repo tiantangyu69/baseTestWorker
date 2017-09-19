@@ -1,6 +1,7 @@
 package lang;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -10,8 +11,10 @@ import org.slf4j.helpers.Util;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by bjlizhitao on 2016/7/14.
@@ -106,5 +109,23 @@ public class TestLang {
         System.out.println(lists.subList(0, 10));
         System.out.println(lists.subList(lists.size() - 2, lists.size()));
 
+    }
+
+    @Test
+    public void testAAA() throws Exception {
+        String s = URLDecoder.decode("alphago+%e5%b0%b1%e6%98%af%e5%8e%89%e5%ae%b3", "UTF-8");
+
+        String gbk = new String(s.getBytes("UTF-8"), "GBK");
+        System.out.println(s);
+        System.out.println(gbk);
+        String utf8 = new String(gbk.getBytes("GBK"), "UTF-8");
+        System.out.println(utf8);
+    }
+
+    @Test
+    public void testPutIfAbsent(){
+        ConcurrentMap<String, String> map = Maps.newConcurrentMap();
+        System.out.println(map.putIfAbsent("aaa", "1"));
+        System.out.println(map.putIfAbsent("aaa", "2"));
     }
 }
