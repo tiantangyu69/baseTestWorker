@@ -3,11 +3,8 @@ import org.junit.runner.RunWith;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Pipeline;
 
 import javax.annotation.Resource;
-import java.util.Set;
 
 /**
  * Created by bjlizhitao on 2016/6/15.
@@ -19,21 +16,23 @@ public class TestBatchSendMsgToFollowers {
     private AmqpTemplate AmqpTemplate;
 
     @Test
-    public void testSendMessage() {
-        for (int i = 0; i < 30; i++) {
+    public void testSendMessage() throws InterruptedException {
+        for (int i = 0; i < 3000; i++) {
             AmqpTemplate.convertAndSend("queue_one_key", String.valueOf(i));
         }
+
+        Thread.sleep(100000);
     }
 
-    @Test
+   /* @Test
     public void testSendMessage2() {
         for (int i = 0; i < 30; i++) {
             AmqpTemplate.convertAndSend("queue_two_key", String.valueOf(i));
         }
-    }
+    }*/
 
     /*@Test
-    public void testBatchInsertAndGetFormRedis() {
+    public void testConsumer() {
 
         Jedis jedis = new Jedis();
 
