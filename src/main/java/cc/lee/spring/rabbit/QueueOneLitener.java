@@ -14,7 +14,7 @@ public class QueueOneLitener implements MessageListener {
 //        CountDownLatch.countDown();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

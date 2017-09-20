@@ -17,11 +17,11 @@ public class TestBatchSendMsgToFollowers {
 
     @Test
     public void testSendMessage() throws InterruptedException {
-        for (int i = 0; i < 3000; i++) {
+        for (int i = 0; i < 500; i++) {
             AmqpTemplate.convertAndSend("queue_one_key", String.valueOf(i));
         }
 
-        Thread.sleep(100000);
+        Thread.sleep(6000000);
     }
 
    /* @Test

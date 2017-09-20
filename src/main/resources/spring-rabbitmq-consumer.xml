@@ -7,26 +7,35 @@
         http://www.springframework.org/schema/rabbit
         http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
     <!-- 连接服务配置  -->
-    <rabbit:connection-factory id="connectionFactory" host="localhost" username="guest" password="guest" port="5672"/>
-    <rabbit:admin connection-factory="connectionFactory"/>
+    <rabbit:connection-factory id="connectionFactory1" host="localhost" username="guest" password="guest" port="5672"/>
+    <rabbit:connection-factory id="connectionFactory2" host="localhost" username="test" password="test" port="5672"/>
+
+    <bean id="routingConnectionFactory" class="org.springframework.amqp.rabbit.connection.SimpleRoutingConnectionFactory">
+        <property name="defaultTargetConnectionFactory" ref="connectionFactory2"/>
+        <property name="targetConnectionFactories">
+            <map>
+                <entry key="factory1" value-ref="connectionFactory1"/>
+                <entry key="factory2" value-ref="connectionFactory2"/>
+            </map>
+        </property>
+    </bean>
+
+    <rabbit:admin connection-factory="routingConnectionFactory"/>
 
     <!-- queue 队列声明-->
     <rabbit:queue id="queue_one" durable="true" auto-delete="false" exclusive="false" name="queue_one"/>
-    <!--<rabbit:queue id="queue_two" durable="true" auto-delete="false" exclusive="false" name="queue_two"/>-->
     <!-- exchange queue binging key 绑定 -->
     <rabbit:direct-exchange name="my-mq-exchange" durable="true" auto-delete="false" id="my-mq-exchange">
         <rabbit:bindings>
             <rabbit:binding queue="queue_one" key="queue_one_key"/>
-            <!--<rabbit:binding queue="queue_two" key="queue_two_key"/>-->
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
     <!-- queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 taskExecutor这个需要自己实现一个连接池 按照官方说法 除非特别大的数据量 一般不需要连接池-->
-    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto" prefetch="2" concurrency="5">
+    <rabbit:listener-container connection-factory="routingConnectionFactory" acknowledge="auto" prefetch="10" concurrency="1">
         <rabbit:listener queues="queue_one" ref="queueOneLitener"/>
-        <!--<rabbit:listener queues="queue_two" ref="queueTowLitener"/>-->
     </rabbit:listener-container>
 
     <bean id="queueOneLitener" class="cc.lee.spring.rabbit.QueueOneLitener"/>
-    <!--<bean id="queueTowLitener" class="cc.lee.spring.rabbit.QueueTwoLitener"/>-->
+
 </beans>
