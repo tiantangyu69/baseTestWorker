@@ -15,6 +15,7 @@ import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
+import java.util.regex.Pattern;
 
 /**
  * Created by bjlizhitao on 2016/7/14.
@@ -127,5 +128,19 @@ public class TestLang {
         ConcurrentMap<String, String> map = Maps.newConcurrentMap();
         System.out.println(map.putIfAbsent("aaa", "1"));
         System.out.println(map.putIfAbsent("aaa", "2"));
+    }
+
+    @Test
+    public void testNginxConf(){
+
+        Pattern pattern1 = Pattern.compile("^/api/v1/products/(.*)/users/realname/(smscaptcha|bind)");
+        Pattern pattern2 = Pattern.compile("^/api/v1/products/(.*)/users/bindPhStatus");
+
+        System.out.println(pattern1.matcher("/api/v1/products/sdfsdfsdfsdfsdfsdfsdf/users/realname/smscaptcha?phone=aaa&sdfsdf=?").matches());
+        System.out.println(pattern1.matcher("/api/v1/products/sdfsdfsdfsdfsdfsdfsdf/app/users/realname/smscaptcha?phone=18888888888&test=test").matches());
+        System.out.println(pattern1.matcher("/api/v1/products/sdfsdfsdfsdfsdfsdfsdf/users/realname/bind?phone=aaa&sdfsdf=?").matches());
+        System.out.println(pattern1.matcher("/api/v1/products/sdfsdfsdfsdfsdfsdfsdf/app/users/realname/bind?phone=aaa&sdfsdf=?").matches());
+        System.out.println(pattern2.matcher("/api/v1/products/sdfsdfsdfsdfsdfsdfsdf/users/bindPhStatus?phone=aaa&sdfsdf=?").matches());
+        System.out.println(pattern2.matcher("/api/v1/products/sdfsdfsdfsdfsdfsdfsdf/app/users/bindPhStatus?phone=aaa&sdfsdf=?").matches());
     }
 }
